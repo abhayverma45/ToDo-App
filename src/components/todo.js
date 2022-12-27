@@ -4,9 +4,21 @@ import "../App.css";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 
+// GETTING DATA
+
+const getLocalItem = () => {
+  let list = localStorage.getItem('list');
+  console.log(list);
+  if (list) {
+    return JSON.parse(localStorage.getItem('list'));
+  } else {
+    return [];
+  }
+};
+
 const Todo = () => {
   const [Data, setData] = useState("");
-  const [items, setitems] = useState([]);
+  const [items, setitems] = useState(getLocalItem());
 
   const additems = () => {
     if (!Data) {
@@ -33,12 +45,10 @@ const Todo = () => {
 
   //   local storage
 
-  useEffect(()=>{
-    localStorage.setitems('lists',JSON.stringify(items));
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(items));
   }, [items]);
 
-
-// 
   return (
     <>
       <div className="main-div">
@@ -58,7 +68,11 @@ const Todo = () => {
               value={Data}
               onChange={(e) => setData(e.target.value)}
             />
-            <i class="fa fa-plus add-btn" title="Add Items" onClick={additems}>
+            <i
+              className="fa fa-plus add-btn"
+              title="Add Items"
+              onClick={additems}
+            >
               <AddIcon />
             </i>
           </div>
